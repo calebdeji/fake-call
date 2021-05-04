@@ -4,8 +4,11 @@ bool isStringEmpty(String text) {
   return trimmedString == '';
 }
 
-bool isPhoneNumberValid(String phone) {
-  RegExp regex = RegExp(r"^[0-9]{11}");
+bool isPhoneNumberAValidNigeriaPhoneNumber(String phone) {
+  RegExp regexWithCallingCode =
+      RegExp(r'^\+234([7-9]{1})([0-1]{1})([0-9]{8}$)');
+  RegExp regexWithoutCallingCode = RegExp(r'^0[7-9]{1}[0-1]{1}[0-9]{8}$');
 
-  return regex.hasMatch(phone);
+  return regexWithoutCallingCode.hasMatch(phone) ||
+      regexWithCallingCode.hasMatch(phone);
 }
