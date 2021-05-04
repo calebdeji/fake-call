@@ -1,0 +1,14 @@
+import 'package:fakeCall/service/Toaster/Toaster.dart';
+import 'package:fakeCall/ui/views/Home/Home.dart';
+import 'package:fakeCall/ui/views/Success/Success.dart';
+import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+@StackedApp(routes: [
+  MaterialRoute(page: HomeView, initial: true),
+  CupertinoRoute(page: SuccessView)
+], dependencies: [
+  LazySingleton(classType: NavigationService),
+  LazySingleton(classType: ToasterService)
+])
+class AppSetUp {}
