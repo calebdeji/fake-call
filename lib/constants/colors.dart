@@ -12,3 +12,5 @@ final Color white100 = getColorFromHexValue("FFFFFF");
 final Color white200 = getColorFromHexValue("E0E0E0");
 final Color yellow100 = getColorFromHexValue("FFCB27");
 final Color yellow200 = getColorFromHexValue("FFE361");
+final Color purple100 = getColorFromHexValue('800080');
+final Color brown100 = getColorFromHexValue('A52A2A');

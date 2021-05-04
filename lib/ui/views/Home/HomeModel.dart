@@ -1,14 +1,20 @@
 import 'package:fakeCall/app/app.locator.dart';
 import 'package:fakeCall/networks/call/call.dart';
 import 'package:fakeCall/service/Toaster/Toaster.dart';
+import 'package:fakeCall/ui/components/ContactPicker/ContactPicker.dart';
 import 'package:fakeCall/ui/views/Home/Home.form.dart';
 import 'package:fakeCall/utils/helpers.dart';
 import 'package:fakeCall/utils/validators.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:fakeCall/app/app.router.dart';
 
 class HomeModel extends FormViewModel {
+  HomeModel({@required this.phoneNumberController});
+
+  final TextEditingController phoneNumberController;
+
   String selectedValue = '1';
   String phoneNumberErrorMessage;
   bool isFired = false;
@@ -37,6 +43,19 @@ class HomeModel extends FormViewModel {
     notifyListeners();
   }
 
+  void navigateToPicker() {
+    _navigationService.navigateWithTransition(
+      ContactPicker(
+        handleSelect: (value) {
+          if (value != null) {
+            phoneNumberController.text = value;
+          }
+        },
+      ),
+      transition: 'downToUp',
+    );
+  }
+
   void handleSubmit() async {
     try {
       if (!isFired) {
@@ -50,9 +69,11 @@ class HomeModel extends FormViewModel {
             phoneNumber:
                 appendNigeriaCallingCodeToPhoneNumber(phoneNumberValue)));
 
-        _navigationService.navigateTo(Routes.successView,
-            arguments: SuccessViewArguments(
-                minutes: parsedTimeSelected, phoneNumber: phoneNumberValue));
+        _navigationService.navigateTo(
+          Routes.successView,
+          arguments: SuccessViewArguments(
+              minutes: parsedTimeSelected, phoneNumber: phoneNumberValue),
+        );
       }
     } catch (e) {
       _toasterService

@@ -10,6 +10,7 @@ class Input extends StatelessWidget {
       this.obscureText,
       this.validator,
       this.handleChange,
+      this.suffixIcon,
       this.keyboardType});
 
   final IconData icon;
@@ -21,6 +22,7 @@ class Input extends StatelessWidget {
   final bool obscureText;
   final String Function(String value) validator;
   final Function(String value) handleChange;
+  final Widget suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class Input extends StatelessWidget {
         onChanged: handleChange,
         decoration: InputDecoration(
             prefixIcon: Icon(icon ?? Icons.input),
+            suffixIcon: suffixIcon ?? null,
             labelText: label ?? '',
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             errorText: errorMessage,
