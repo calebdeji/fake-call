@@ -10,15 +10,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../ui/components/ContactPicker/ContactPicker.dart';
 import '../ui/views/Home/Home.dart';
 import '../ui/views/Success/Success.dart';
 
 class Routes {
   static const String homeView = '/';
   static const String successView = '/success-view';
+  static const String contactPicker = '/contact-picker';
   static const all = <String>{
     homeView,
     successView,
+    contactPicker,
   };
 }
 
@@ -28,6 +31,7 @@ class StackedRouter extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.successView, page: SuccessView),
+    RouteDef(Routes.contactPicker, page: ContactPicker),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -50,6 +54,15 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    ContactPicker: (data) {
+      var args = data.getArgs<ContactPickerArguments>(
+        orElse: () => ContactPickerArguments(),
+      );
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => ContactPicker(handleSelect: args.handleSelect),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -62,4 +75,10 @@ class SuccessViewArguments {
   final int minutes;
   final String phoneNumber;
   SuccessViewArguments({this.minutes, this.phoneNumber});
+}
+
+/// ContactPicker arguments holder class
+class ContactPickerArguments {
+  final dynamic Function(String) handleSelect;
+  ContactPickerArguments({this.handleSelect});
 }

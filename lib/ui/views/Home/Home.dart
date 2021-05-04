@@ -21,7 +21,8 @@ class HomeView extends HookWidget with $HomeView {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeModel>.reactive(
-      viewModelBuilder: () => HomeModel(),
+      viewModelBuilder: () =>
+          HomeModel(phoneNumberController: phoneNumberController),
       onModelReady: (model) => listenToFormUpdated(model),
       builder: (context, viewModel, child) {
         return GenericScreen(
@@ -37,6 +38,10 @@ class HomeView extends HookWidget with $HomeView {
                 controller: phoneNumberController,
                 errorMessage: viewModel.phoneNumberErrorMessage,
                 handleChange: viewModel.handlePhoneNumberChange,
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.contacts_outlined),
+                  onPressed: viewModel.navigateToPicker,
+                ),
               ),
               SizedBox(
                 height: 10,
