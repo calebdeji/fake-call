@@ -26,23 +26,31 @@ class Input extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextFormField(
-        keyboardType: keyboardType ?? TextInputType.text,
-        obscureText: obscureText ?? false,
-        controller: controller ?? null,
-        validator: validator,
-        onChanged: handleChange,
-        decoration: InputDecoration(
-            prefixIcon: Icon(icon ?? Icons.input),
-            suffixIcon: suffixIcon ?? null,
-            labelText: label ?? '',
-            floatingLabelBehavior: FloatingLabelBehavior.auto,
-            errorText: errorMessage,
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15)))),
-      ),
-      margin: EdgeInsets.only(bottom: 25),
+    return Stack(
+      children: [
+        Container(
+          child: TextFormField(
+            keyboardType: keyboardType ?? TextInputType.text,
+            obscureText: obscureText ?? false,
+            controller: controller ?? null,
+            validator: validator,
+            onChanged: handleChange,
+            decoration: InputDecoration(
+                prefixIcon: Icon(icon ?? Icons.input),
+                labelText: label ?? '',
+                floatingLabelBehavior: FloatingLabelBehavior.auto,
+                errorText: errorMessage,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)))),
+          ),
+          margin: EdgeInsets.only(bottom: 25),
+        ),
+        if (suffixIcon != null)
+          Positioned(
+            child: suffixIcon,
+            right: 0,
+          )
+      ],
     );
   }
 }
