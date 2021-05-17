@@ -1,4 +1,5 @@
-import 'package:fakeCall/constants/colors.dart';
+import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:flutter/rendering.dart';
 
 Color getColorFromHexValue(String hexValue) {
@@ -19,57 +20,24 @@ String getNamePrefixs(String name) {
       .toUpperCase();
 }
 
-Color getBackgroundCOlorBasedOnName(String name) {
-  List<String> alphabeths = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z"
-  ];
+Color generateRandomColor() {
+  final _random = Random();
 
-  final int indexOfNameFirstCharacter =
-      alphabeths.indexOf(name[0].toLowerCase());
+  return Colors.primaries[_random.nextInt(Colors.primaries.length)]
+      [_random.nextInt(9) * 100];
+}
 
-  final int indexOfNameSecondCharacter =
-      alphabeths.indexOf(name.length > 1 ? name[1].toLowerCase() : 'd');
-
-  if (indexOfNameFirstCharacter == -1) {
-    return yellow100;
-  } else if (indexOfNameFirstCharacter % 3 == 0 &&
-      indexOfNameSecondCharacter % 2 == 0) {
-    return blue200;
-  } else if (indexOfNameFirstCharacter % 6 == 0 &&
-      indexOfNameSecondCharacter % 3 == 0) {
-    return gray100;
-  } else if (indexOfNameFirstCharacter % 12 == 0 ||
-      indexOfNameSecondCharacter % 2 == 0) {
-    return primaryColor;
-  } else if (indexOfNameFirstCharacter % 2 == 0 ||
-      indexOfNameSecondCharacter % 3 == 0) {
-    return purple100;
+T getkeywordDataFromList<T extends List>(T data, String keyword) {
+  try {
+    return data.map((e) {
+      String name = e.name;
+      if (name != null) {
+        if (name.contains(keyword)) return e;
+      } else {
+        throw Exception('Name property not found');
+      }
+    }).toList();
+  } catch (e) {
+    return null;
   }
-
-  return brown100;
 }

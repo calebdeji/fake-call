@@ -1,5 +1,5 @@
+import 'package:fakeCall/constants/colors.dart';
 import 'package:fakeCall/ui/components/Paragraph/Paragraph.dart';
-import 'package:fakeCall/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 
@@ -15,14 +15,22 @@ class ContactsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: List.of(contacts).map((contact) {
-        return ContactItem(
-          contact: contact,
-          handleSelectContact: handleSelect,
-        );
-      }).toList(),
-    );
+    return contacts.isEmpty
+        ? Container(
+            child: Paragraph(
+              text: 'contact not found',
+              color: red100,
+            ),
+            alignment: Alignment.topCenter,
+          )
+        : ListView(
+            children: List.of(contacts).map((contact) {
+              return ContactItem(
+                contact: contact,
+                handleSelectContact: handleSelect,
+              );
+            }).toList(),
+          );
   }
 }
 
@@ -48,11 +56,11 @@ class ContactItem extends StatelessWidget {
                 text: phoneNumber,
               ),
               leading: CircleAvatar(
-                backgroundColor:
-                    getBackgroundCOlorBasedOnName(contact.displayName),
-                child: Paragraph(
-                  text: getNamePrefixs(contact.displayName),
-                ),
+                backgroundImage:
+                    (contact.avatar != null && contact.avatar.isNotEmpty)
+                        ? MemoryImage(contact.avatar)
+                        : AssetImage('assets/images/placeholder.png'),
+                backgroundColor: gray100,
               ),
             ),
             onTap: () {
