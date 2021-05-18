@@ -1,5 +1,7 @@
 import 'package:fakeCall/constants/colors.dart';
+import 'package:fakeCall/ui/components/Heading/Heading.dart';
 import 'package:fakeCall/ui/components/Paragraph/Paragraph.dart';
+import 'package:fakeCall/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 
@@ -56,11 +58,21 @@ class ContactItem extends StatelessWidget {
                 text: phoneNumber,
               ),
               leading: CircleAvatar(
-                backgroundImage:
-                    (contact.avatar != null && contact.avatar.isNotEmpty)
-                        ? MemoryImage(contact.avatar)
-                        : AssetImage('assets/images/placeholder.png'),
-                backgroundColor: gray100,
+                foregroundColor: white100,
+                backgroundColor:
+                    generateRandomColorBasedOnString(contact.displayName),
+                child: (contact.avatar == null || contact.avatar.isEmpty)
+                    ? Heading(
+                        text: getNamePrefixs(contact.displayName),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: MemoryImage(contact.avatar),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(100)),
+                      ),
               ),
             ),
             onTap: () {
